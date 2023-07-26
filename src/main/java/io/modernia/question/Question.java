@@ -1,7 +1,9 @@
 package io.modernia.question;
 
-import io.quarkus.hibernate.orm.panache.PanacheEntity;
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,10 +15,13 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Question extends PanacheEntity {
+public class Question {
+    @Id
+    @GeneratedValue
     private Long id;
     private String question;
     private String code;
     private String answer;
+    @ElementCollection
     private List<String> options;
 }

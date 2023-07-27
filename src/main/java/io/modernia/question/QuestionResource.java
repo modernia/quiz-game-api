@@ -84,7 +84,7 @@ public class QuestionResource {
     @POST
     @Path("/various")
     public Response createVarious(Question[] questions) {
-        Arrays.stream(questions).parallel().forEach(question -> {
+        Arrays.stream(questions).forEach(question -> {
             if(question.getId() == null) {
                 questionRepository.persist(question);
             }

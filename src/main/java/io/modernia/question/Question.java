@@ -1,14 +1,13 @@
 package io.modernia.question;
 
-import jakarta.persistence.ElementCollection;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.annotation.Nullable;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.lang.reflect.Array;
 import java.util.List;
 
 @Getter @Setter
@@ -20,8 +19,8 @@ public class Question {
     @GeneratedValue
     private Long id;
     private String question;
+    @Nullable
     private String code;
     private String answer;
-    @ElementCollection
-    private List<String> options;
+    private List<String> choices;
 }

@@ -22,19 +22,6 @@ public class QuestionService {
         return question;
     }
 
-
-    public Response create(Question question) {
-        if(question.getId() != null) {
-            return Response
-                .status(Response.Status.BAD_REQUEST)
-                .entity(Messages.endpointMessage("Question ID must be null", Response.Status.BAD_REQUEST.getStatusCode()))
-                .build();
-        }
-        questionRepository.persist(question);
-
-        return Response.status(Response.Status.CREATED).entity(question).build();
-    }
-
     public Response index() {
         return Response.ok(questionRepository.listAll()).build();
     }
@@ -48,6 +35,33 @@ public class QuestionService {
                 .build();
         }
         return Response.ok(question).build();
+    }
+
+    public Response create(Question question) {
+        if(question.getId() != null) {
+            return Response
+                .status(Response.Status.BAD_REQUEST)
+                .entity(Messages.endpointMessage("Question ID must be null", Response.Status.BAD_REQUEST.getStatusCode()))
+                .build();
+        }
+        questionRepository.persist(question);
+
+        return Response.status(Response.Status.CREATED).entity(question).build();
+    }
+
+    public Response update(Long id, Question question) {
+        var questionToUpdate = questionRepository.findById(id);
+        if(questionToUpdate == null) {
+            return Response
+                .status(NOT_FOUND)
+                .entity(Messages.endpointMessage("Question not found", NOT_FOUND.getStatusCode()))
+                .build();
+        }
+        questionToUpdate.setQuestion(question.getQuestion());
+        questionToUpdate.setAnswer(question.getAnswer());
+        questionToUpdate.setChoices(question.getChoices());
+        questionRepository.persist(questionToUpdate);
+        return Response.ok(questionToUpdate).build();
     }
 
 

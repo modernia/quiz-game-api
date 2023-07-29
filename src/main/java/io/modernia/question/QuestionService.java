@@ -8,6 +8,8 @@ import messages.Messages;
 
 import java.util.List;
 
+import static jakarta.ws.rs.core.Response.Status.NOT_FOUND;
+
 @Transactional
 @ApplicationScoped
 public class QuestionService {
@@ -20,9 +22,6 @@ public class QuestionService {
         return question;
     }
 
-    public List<Question> getAllQuestions() {
-        return questionRepository.listAll();
-    }
 
     public Response create(Question question) {
         if(question.getId() != null) {
@@ -34,6 +33,21 @@ public class QuestionService {
         questionRepository.persist(question);
 
         return Response.status(Response.Status.CREATED).entity(question).build();
+    }
+
+    public Response index() {
+        return Response.ok(questionRepository.listAll()).build();
+    }
+
+    public Response indexOne(Long id) {
+        var question = questionRepository.findById(id);
+        if(question == null) {
+            return Response
+                .status(NOT_FOUND)
+                .entity(Messages.endpointMessage("Question not found", NOT_FOUND.getStatusCode()))
+                .build();
+        }
+        return Response.ok(question).build();
     }
 
 

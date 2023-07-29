@@ -24,20 +24,13 @@ public class QuestionResource {
 
     @GET
     public Response index() {
-        return Response.ok(questionRepository.listAll()).build();
+        return questionService.index();
     }
 
     @GET
     @Path("/{id}")
     public Response indexOne(@PathParam("id") Long id) {
-        var question = questionRepository.findById(id);
-        if(question == null) {
-            return Response
-                .status(NOT_FOUND)
-                .entity(Messages.endpointMessage("Question not found", NOT_FOUND.getStatusCode()))
-                .build();
-        }
-        return Response.ok(question).build();
+        return questionService.indexOne(id);
     }
 
     @POST

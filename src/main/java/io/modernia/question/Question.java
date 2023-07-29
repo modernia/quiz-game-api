@@ -2,6 +2,7 @@ package io.modernia.question;
 
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
+import language.Language;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,4 +23,6 @@ public class Question {
     private String code;
     private String answer;
     private List<String> choices;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    private Language languageId;
 }

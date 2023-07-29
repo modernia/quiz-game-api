@@ -17,7 +17,7 @@ import static jakarta.ws.rs.core.Response.Status.OK;
 public class QuestionResource {
 
     @Inject
-    private QuestionRepository questionRepository;
+    public QuestionRepository questionRepository;
 
     @GET
     public Response index() {

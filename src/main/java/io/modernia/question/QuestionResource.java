@@ -19,6 +19,9 @@ public class QuestionResource {
     @Inject
     public QuestionRepository questionRepository;
 
+    @Inject
+    public QuestionService questionService;
+
     @GET
     public Response index() {
         return Response.ok(questionRepository.listAll()).build();
@@ -39,15 +42,7 @@ public class QuestionResource {
 
     @POST
     public Response create(Question question) {
-        if(question.getId() != null) {
-            return Response
-                .status(Response.Status.BAD_REQUEST)
-                .entity(Messages.endpointMessage("Question ID must be null", Response.Status.BAD_REQUEST.getStatusCode()))
-                .build();
-        }
-        questionRepository.persist(question);
-
-        return Response.status(Response.Status.CREATED).entity(question).build();
+        return questionService.create(question);
     }
 
     @PUT

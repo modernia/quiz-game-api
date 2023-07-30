@@ -6,9 +6,8 @@ import jakarta.transaction.Transactional;
 import jakarta.ws.rs.core.Response;
 import messages.Messages;
 
-import java.util.List;
-
 import static jakarta.ws.rs.core.Response.Status.NOT_FOUND;
+import static jakarta.ws.rs.core.Response.Status.OK;
 
 @Transactional
 @ApplicationScoped
@@ -64,5 +63,16 @@ public class QuestionService {
         return Response.ok(questionToUpdate).build();
     }
 
+    public Response delete(Long id) {
+        var question = questionRepository.findById(id);
+        if(question == null) {
+            return Response
+                .status(NOT_FOUND)
+                .entity(Messages.endpointMessage("Question not found", NOT_FOUND.getStatusCode()))
+                .build();
+        }
+        questionRepository.delete(question);
+        return Response.ok(Messages.endpointMessage("Question successfully deleted", OK.getStatusCode())).build();
+    }
 
 }

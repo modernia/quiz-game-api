@@ -41,18 +41,7 @@ public class QuestionResource {
     @PUT
     @Path("/{id}")
     public Response update(@PathParam("id") Long id, Question question) {
-        var questionToUpdate = questionRepository.findById(id);
-        if(questionToUpdate == null) {
-            return Response
-                .status(NOT_FOUND)
-                .entity(Messages.endpointMessage("Question not found", NOT_FOUND.getStatusCode()))
-                .build();
-        }
-        questionToUpdate.setQuestion(question.getQuestion());
-        questionToUpdate.setAnswer(question.getAnswer());
-        questionToUpdate.setChoices(question.getChoices());
-        questionRepository.persist(questionToUpdate);
-        return Response.ok(questionToUpdate).build();
+        return questionService.update(id, question);
     }
 
     @DELETE

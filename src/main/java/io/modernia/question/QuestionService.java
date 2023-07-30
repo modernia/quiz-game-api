@@ -6,6 +6,8 @@ import jakarta.transaction.Transactional;
 import jakarta.ws.rs.core.Response;
 import messages.Messages;
 
+import java.util.Arrays;
+
 import static jakarta.ws.rs.core.Response.Status.NOT_FOUND;
 import static jakarta.ws.rs.core.Response.Status.OK;
 
@@ -14,12 +16,6 @@ import static jakarta.ws.rs.core.Response.Status.OK;
 public class QuestionService {
     @Inject
     private QuestionRepository questionRepository;
-
-
-    public Question createQuestion(Question question) {
-        questionRepository.persist(question);
-        return question;
-    }
 
     public Response index() {
         return Response.ok(questionRepository.listAll()).build();
@@ -73,6 +69,18 @@ public class QuestionService {
         }
         questionRepository.delete(question);
         return Response.ok(Messages.endpointMessage("Question successfully deleted", OK.getStatusCode())).build();
+    }
+
+    public Response createVarious(Question[] questions) {
+        Arrays.stream(questions).forEach(question -> {
+            if(question.getId() == null) {
+                questionRepository.persist(question);
+            }
+        });
+        return Response
+            .status(Response.Status.CREATED)
+            .entity(Messages.endpointMessage("Questions successfully created", Response.Status.CREATED.getStatusCode()))
+            .build();
     }
 
 }

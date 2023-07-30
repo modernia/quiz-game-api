@@ -24,7 +24,7 @@ public class QuestionTest {
         question.setAnswer("42");
         question.setCode(null);
         question.setChoices(List.of("42", "43", "44", "45"));
-        questionService.createQuestion(question);
+        questionService.create(question);
     }
 
     @Test

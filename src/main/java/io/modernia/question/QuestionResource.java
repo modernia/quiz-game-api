@@ -4,21 +4,10 @@ import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Response;
-import messages.Messages;
-
-import java.util.Arrays;
-
-import static jakarta.ws.rs.core.Response.Status.NOT_FOUND;
-import static jakarta.ws.rs.core.Response.Status.OK;
-
 
 @Path("/question")
 @Transactional
 public class QuestionResource {
-
-    @Inject
-    public QuestionRepository questionRepository;
-
     @Inject
     public QuestionService questionService;
 
@@ -53,14 +42,6 @@ public class QuestionResource {
     @POST
     @Path("/various")
     public Response createVarious(Question[] questions) {
-        Arrays.stream(questions).forEach(question -> {
-            if(question.getId() == null) {
-                questionRepository.persist(question);
-            }
-        });
-        return Response
-            .status(Response.Status.CREATED)
-            .entity(Messages.endpointMessage("Questions successfully created", Response.Status.CREATED.getStatusCode()))
-            .build();
+        return questionService.createVarious(questions);
     }
 }

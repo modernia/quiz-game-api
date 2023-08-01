@@ -5,7 +5,7 @@ import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Response;
 
-@Path("/question")
+@Path("/api/question")
 @Transactional
 public class QuestionResource {
     @Inject

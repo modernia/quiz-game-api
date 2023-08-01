@@ -11,7 +11,7 @@ import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.*;
 
 @QuarkusTest
-public class QuestionTest {
+public class TestQuestion {
 
     @Inject
     QuestionService questionService;

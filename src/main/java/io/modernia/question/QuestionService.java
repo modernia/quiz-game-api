@@ -60,14 +60,13 @@ public class QuestionService {
     }
 
     public Response delete(Long id) {
-        var question = questionRepository.findById(id);
-        if(question == null) {
+        var question = questionRepository.deleteById(id);
+        if(!question) {
             return Response
                 .status(NOT_FOUND)
                 .entity(Messages.endpointMessage("Question not found", NOT_FOUND.getStatusCode()))
                 .build();
         }
-        questionRepository.delete(question);
         return Response.ok(Messages.endpointMessage("Question successfully deleted", OK.getStatusCode())).build();
     }
 
